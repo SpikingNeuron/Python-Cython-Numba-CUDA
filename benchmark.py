@@ -29,23 +29,16 @@ from Algo_RotateNN import AlgoRotateNN
 custom_stream = sys.stdout
 # custom_stream = open("report.txt", "w", encoding="utf-8")
 
-# variables that store size of images
-lena_rgb_uint8 = ndimage.imread('lena.jpg')
-lena_rgb_float32 = lena_rgb_uint8.astype(np.float32)
-lena_grey_uint8 = ndimage.imread('lena.jpg', mode='L')
-lena_grey_float32 = lena_grey_uint8.astype(np.float32)
+# config vars
+_PLOT = True
 
 
-small_shape_grey = (2048, 2048)
-large_shape_grey = (4096, 4096)
-small_shape_rgb = (2048, 2048, 3)
-large_shape_rgb = (4096, 4096, 3)
-
-misc.imresize(lena_rgb_float32, small_shape_grey, interp='bilinear')
-
-
-#plot image
+# plot image
 def plot_images(im0, im1, im2, im3, title):
+
+    if not _PLOT:
+        return
+
     fig = plt.figure()
     fig.suptitle(title)
 
