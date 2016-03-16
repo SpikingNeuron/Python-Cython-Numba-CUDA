@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 # for compiling the cython code
 import pyximport
-pyximport.install(inplace=True,
+pyximport.install(inplace=False,
                   setup_args={"include_dirs": np.get_include()},
                   reload_support=True)
 
@@ -33,8 +33,22 @@ custom_stream = sys.stdout
 _PLOT = True
 
 
-# plot image
 def plot_images(im0, im1, im2, im3, title):
+    """
+    plot the image
+    :param im0:
+    :type im0:
+    :param im1:
+    :type im1:
+    :param im2:
+    :type im2:
+    :param im3:
+    :type im3:
+    :param title:
+    :type title:
+    :return:
+    :rtype:
+    """
 
     if not _PLOT:
         return
@@ -60,8 +74,15 @@ def plot_images(im0, im1, im2, im3, title):
 
     plt.show()
 
-# get image utility
+
 def get_image(query):
+    """
+    get the image
+    :param query:
+    :type query:
+    :return:
+    :rtype:
+    """
     args = query.split(sep='_')
     lena = None
 
@@ -89,8 +110,20 @@ def get_image(query):
     return lena
 
 
-# print utility
 def print_utility(time_taken_np, time_taken_cy, time_taken_cuda, message):
+    """
+    print utility
+    :param time_taken_np:
+    :type time_taken_np:
+    :param time_taken_cy:
+    :type time_taken_cy:
+    :param time_taken_cuda:
+    :type time_taken_cuda:
+    :param message:
+    :type message:
+    :return:
+    :rtype:
+    """
     global custom_stream
     # custom_stream.write('\n' + message)
     custom_stream.write('\nTime taken Numpy : ' + str(time_taken_np))
@@ -101,6 +134,9 @@ def print_utility(time_taken_np, time_taken_cy, time_taken_cuda, message):
 
 
 class TestRotateNN(unittest.TestCase):
+    """
+    Unit test utility for rotating
+    """
 
     def test_image_grey_small_uint8(self):
         theta = 33.7
@@ -134,7 +170,7 @@ if __name__ == '__main__':
 
     # run suite
     custom_stream.write('\n----------------------------------------------------------------------\n')
-    custom_stream.write('\n          *** Rotation of images (with NN-interpolation) *** \n')
+    custom_stream.write('\n          *** Rotation of images (with NN-interpolation) ***          \n')
     custom_stream.write('\n----------------------------------------------------------------------\n\n')
     suite = unittest.TestLoader().loadTestsFromTestCase(TestRotateNN)
     unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
