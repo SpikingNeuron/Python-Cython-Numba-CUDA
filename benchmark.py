@@ -89,23 +89,24 @@ def get_image(query):
     if args[2] == 'grey':
         lena = ndimage.imread('lena.jpg', mode='L')
     elif args[2] == 'rgb':
-        lena = ndimage.imread('lena.jpg')
+        lena = ndimage.imread('lena.jpg', mode='RGB')
     else:
         raise ValueError('Invalid color type. Allowed rgb or grey')
 
     if args[3] == 'small':
-        lena = misc.imresize(lena, (2048, 2048), interp='bilinear')
+        #lena = misc.imresize(lena, (100, 50), interp='bilinear')
+        lena = misc.imresize(lena, (2048, 1000), interp='bilinear')
     elif args[3] == 'large':
         lena = misc.imresize(lena, (4096, 4096), interp='bilinear')
     else:
         raise ValueError('Invalid size. Allowed small or large')
 
     if args[4] == 'uint8':
-        lena = lena
-    elif args[4] == 'float32':
-        lena = lena.astype(np.float32)
+        lena = lena.astype(np.uint8)
+    elif args[4] == 'float':
+        lena = lena.astype(np.float)
     else:
-        raise ValueError('Invalid size. Allowed uint8 or float32')
+        raise ValueError('Invalid size. Allowed uint8 or float')
 
     return lena
 
@@ -148,8 +149,8 @@ class TestRotateNN(unittest.TestCase):
         t1 = end - start
 
         start = time.time()
-        #img_dest2 = AlgoRotateNN().cy_rotate_degree_0(test_image, theta)
-        img_dest2 = ndimage.rotate(test_image, theta, order=0)
+        img_dest2 = AlgoRotateNN().cy_rotate_grey_uint8(test_image, theta)
+        # img_dest2 = ndimage.rotate(test_image, theta, order=0)
         end = time.time()
         t2 = end - start
 
@@ -157,6 +158,11 @@ class TestRotateNN(unittest.TestCase):
         img_dest3 = ndimage.rotate(test_image, theta, order=0)
         end = time.time()
         t3 = end - start
+
+        print('........')
+        print(test_image.shape)
+        print(img_dest1.shape)
+        print(img_dest2.shape)
 
         print_utility(t1, t2, t3, '')
 
