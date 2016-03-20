@@ -63,13 +63,13 @@ cdef class AlgoRotateNN:
         cdef np.uint8_t[:,:] dst = np.zeros((ox, oy), dtype=np.uint8)
 
         # populate the destination image
-        cdef Py_ssize_t cx = ix - ix/2
-        cdef Py_ssize_t cy = iy - iy/2
+        cdef Py_ssize_t cx = ix/2
+        cdef Py_ssize_t cy = iy/2
         cdef Py_ssize_t index_x, index_y, index_x_new, index_y_new
         for index_x in range(ox):
             for index_y in range(oy):
-                index_y_new = <Py_ssize_t>(<np.float64_t>(index_x-cx)*sin_t + <np.float64_t>(index_y-cy)*cos_t + cx)
-                index_x_new = <Py_ssize_t>(<np.float64_t>(index_x-cx)*cos_t - <np.float64_t>(index_y-cy)*sin_t + cy)
+                index_x_new = <Py_ssize_t>(<np.float64_t>(index_y-cx)*sin_t + <np.float64_t>(index_x-cy)*cos_t) + cx
+                index_y_new = <Py_ssize_t>(<np.float64_t>(index_y-cx)*cos_t - <np.float64_t>(index_x-cy)*sin_t) + cy
                 if 0 <= index_x_new < ix and 0 <= index_y_new < iy:
                     dst[index_x, index_y] = src[index_x_new, index_y_new]
                  #           int newx = ((float)i-xc)*cos(deg) - ((float)j-yc)*sin(deg) + xc;
