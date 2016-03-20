@@ -56,8 +56,8 @@ cdef class AlgoRotateNN:
         maxcx = max(maxcx, sin_t_ix + cos_t_iy)
         mincy = min(mincy, cos_t_ix - sin_t_iy)
         maxcy = max(maxcy, cos_t_ix - sin_t_iy)
-        oy = <Py_ssize_t>(maxcx - mincx + 0.5)
-        ox = <Py_ssize_t>(maxcy - mincy + 0.5)
+        cdef Py_ssize_t oy = <Py_ssize_t>(maxcx - mincx + 0.5)
+        cdef Py_ssize_t ox = <Py_ssize_t>(maxcy - mincy + 0.5)
 
         # create array for return
         cdef np.uint8_t[:,:] dst = np.zeros((ox, oy), dtype=np.uint8)
@@ -68,8 +68,8 @@ cdef class AlgoRotateNN:
         cdef Py_ssize_t index_x, index_y, index_x_new, index_y_new
         for index_x in range(ox):
             for index_y in range(oy):
-                index_x_new = <Py_ssize_t>(<np.float64_t>(index_y-cx)*sin_t + <np.float64_t>(index_x-cy)*cos_t) + cx
-                index_y_new = <Py_ssize_t>(<np.float64_t>(index_y-cx)*cos_t - <np.float64_t>(index_x-cy)*sin_t) + cy
+                index_x_new = <Py_ssize_t>(<np.float64_t>(index_y-cx)*sin_t + <np.float64_t>(index_x-cy)*cos_t) + cx - 512
+                index_y_new = <Py_ssize_t>(<np.float64_t>(index_y-cx)*cos_t - <np.float64_t>(index_x-cy)*sin_t) + cy - 128
                 if 0 <= index_x_new < ix and 0 <= index_y_new < iy:
                     dst[index_x, index_y] = src[index_x_new, index_y_new]
                  #           int newx = ((float)i-xc)*cos(deg) - ((float)j-yc)*sin(deg) + xc;
