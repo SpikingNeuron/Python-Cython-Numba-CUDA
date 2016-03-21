@@ -95,7 +95,7 @@ def get_image(query):
 
     if args[3] == 'small':
         #lena = misc.imresize(lena, (100, 50), interp='bilinear')
-        lena = misc.imresize(lena, (2048, 2048), interp='bilinear')
+        lena = misc.imresize(lena, (50, 30), interp='bilinear')
     elif args[3] == 'large':
         lena = misc.imresize(lena, (4096, 4096), interp='bilinear')
     else:
