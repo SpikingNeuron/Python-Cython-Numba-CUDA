@@ -95,7 +95,7 @@ def get_image(query):
 
     if args[3] == 'small':
         #lena = misc.imresize(lena, (100, 50), interp='bilinear')
-        lena = misc.imresize(lena, (50, 30), interp='bilinear')
+        lena = misc.imresize(lena, (500, 500), interp='bilinear')
     elif args[3] == 'large':
         lena = misc.imresize(lena, (4096, 4096), interp='bilinear')
     else:
@@ -140,7 +140,7 @@ class TestRotateNN(unittest.TestCase):
     """
 
     def test_image_grey_small_uint8(self):
-        theta = 33.7
+        theta = 33.33
         test_image = get_image(self._testMethodName)
 
         start = time.time()

@@ -66,28 +66,16 @@ cdef class AlgoRotateNN:
         cdef Py_ssize_t cx = ox/2
         cdef Py_ssize_t cy = oy/2
         cdef Py_ssize_t index_x, index_y, index_x_new, index_y_new
-        #for index_x in range(ox):
-        #    for index_y in range(oy):
-                #index_x_new = <Py_ssize_t>(<np.float64_t>(index_y-cx)*sin_t + <np.float64_t>(index_x-cy)*cos_t) + cx - 512
-                #index_y_new = <Py_ssize_t>(<np.float64_t>(index_y-cx)*cos_t - <np.float64_t>(index_x-cy)*sin_t) + cy - 128
-        #        if 0 <= index_x_new < ix and 0 <= index_y_new < iy:
-        #            dst[index_x, index_y] = src[index_x_new, index_y_new]
 
-        print(ix/2)
-
+        # rotation logic
         cos_t = cos(-theta)
         sin_t = sin(-theta)
         for index_x in range(ox):
             for index_y in range(oy):
-                #index_x_new = <Py_ssize_t>(<np.float64_t>(index_y-cx)*sin_t + <np.float64_t>(index_x-cy)*cos_t) + cx - 512
-                #index_y_new = <Py_ssize_t>(<np.float64_t>(index_y-cx)*cos_t - <np.float64_t>(index_x-cy)*sin_t) + cy - 128
-
-                index_y_new = <Py_ssize_t>(<np.float64_t>(index_x-cx)*sin_t + <np.float64_t>(index_y-cy)*cos_t) + 12
-                index_x_new = <Py_ssize_t>(<np.float64_t>(index_x-cx)*cos_t - <np.float64_t>(index_y-cy)*sin_t) + 29
+                index_y_new = <Py_ssize_t>((<np.float64_t>(index_x - cx)*sin_t + <np.float64_t>(index_y - cy)*cos_t) + ix/2)
+                index_x_new = <Py_ssize_t>((<np.float64_t>(index_x - cx)*cos_t - <np.float64_t>(index_y - cy)*sin_t) + iy/2)
                 if 0 <= index_x_new <= ix and 0 <= index_y_new <= iy:
                     dst[index_x, index_y] = src[index_x_new, index_y_new]
-                 #           int newx = ((float)i-xc)*cos(deg) - ((float)j-yc)*sin(deg) + xc;
-                  #          int newy = ((float)i-xc)*sin(deg) + ((float)j-yc)*cos(deg) + yc;
 
 
 
