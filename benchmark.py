@@ -37,7 +37,7 @@ custom_stream = sys.stdout
 
 # config vars
 _PLOT = True
-_ITER_NUM = 100
+_ITER_NUM = 1
 _result_timings = {}
 
 

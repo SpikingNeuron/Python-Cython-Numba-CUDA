@@ -23,10 +23,12 @@ We have three implementation of these algorithms for benchmarking:
 The `setup.py` file will be updated soon...)
 
 ## Environment
-+ Windows 10
++ Windows 10 (or Ubuntu 14.04)
 + Python 3.4.3
 + Cython 0.23.4
 + CUDA 7.5
++ Visual Studio 2015
+
 
 ## Dependencies
 ```sh
@@ -49,6 +51,8 @@ python benchmark.py
 ## Benchmark results
 Below are the results (Smaller the better as time taken is the y axis)
 
+The code was run for 100 iterations you cn adjust it with `_ITER_NUM` variable.
+
 + **Rotate with no interpolation**
 
 |                                                                                   |                                                                                 |
@@ -69,4 +73,22 @@ Below are the results (Smaller the better as time taken is the y axis)
 |--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
 |![Not available check Report folder](Report/SubsamplingGray.png?raw=true "Gray image")|![Not available check Report folder](Report/SubsamplingRGB.png?raw=true "RGB image")|
 
+## Output of algorithms
 
++ **Rotate with no interpolation**
+
+![Not available check Report folder](Report/RotateNNtest_image_rgb_small_uint8.png?raw=true "Gray image")
+
++ **Rotate with linear interpolation**
+
+![Not available check Report folder](Report/RotateLintest_image_grey_small_uint8.png?raw=true "Gray image")
+
++ **Subsampling by factor of 2**
+
+![Not available check Report folder](Report/SubSamplingtest_image_grey_small_float.png?raw=true "Gray image")
+
+## Unittest log
+
+```txt
+
+```
