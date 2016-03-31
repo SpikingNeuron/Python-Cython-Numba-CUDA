@@ -29,6 +29,7 @@ cythonize('Algo_SubSampling.pyx', annotate=True)
 
 from Algo_RotateNN import AlgoRotateNN
 from Algo_RotateLinear import AlgoRotateLin
+from Algo_SubSampling import AlgoSubSampling
 
 # To print on console or to file
 custom_stream = sys.stdout
@@ -178,7 +179,7 @@ class TestRotateNNGray(unittest.TestCase):
         print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateNN' + self._testMethodName)
 
         # test case check
         pass
@@ -210,7 +211,7 @@ class TestRotateNNGray(unittest.TestCase):
         print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateNN' + self._testMethodName)
 
         # test case check
         pass
@@ -242,7 +243,7 @@ class TestRotateNNGray(unittest.TestCase):
         print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateNN' + self._testMethodName)
 
         # test case check
         pass
@@ -274,7 +275,7 @@ class TestRotateNNGray(unittest.TestCase):
         print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateNN' + self._testMethodName)
 
         # test case check
         pass
@@ -312,7 +313,7 @@ class TestRotateNNRGB(unittest.TestCase):
         print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateNN' + self._testMethodName)
 
         # test case check
         pass
@@ -344,7 +345,7 @@ class TestRotateNNRGB(unittest.TestCase):
         print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateNN' + self._testMethodName)
 
         # test case check
         pass
@@ -376,7 +377,7 @@ class TestRotateNNRGB(unittest.TestCase):
         print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateNN' + self._testMethodName)
 
         # test case check
         pass
@@ -408,7 +409,7 @@ class TestRotateNNRGB(unittest.TestCase):
         print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateNN' + self._testMethodName)
 
         # test case check
         pass
@@ -446,7 +447,7 @@ class TestRotateLinGray(unittest.TestCase):
         print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateLin' + self._testMethodName)
 
         # test case check
         pass
@@ -478,7 +479,7 @@ class TestRotateLinGray(unittest.TestCase):
         print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateLin' + self._testMethodName)
 
         # test case check
         pass
@@ -510,7 +511,7 @@ class TestRotateLinGray(unittest.TestCase):
         print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateLin' + self._testMethodName)
 
         # test case check
         pass
@@ -542,7 +543,7 @@ class TestRotateLinGray(unittest.TestCase):
         print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateLin' + self._testMethodName)
 
         # test case check
         pass
@@ -580,7 +581,7 @@ class TestRotateLinRGB(unittest.TestCase):
         print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateLin' + self._testMethodName)
 
         # test case check
         pass
@@ -612,7 +613,7 @@ class TestRotateLinRGB(unittest.TestCase):
         print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateLin' + self._testMethodName)
 
         # test case check
         pass
@@ -644,7 +645,7 @@ class TestRotateLinRGB(unittest.TestCase):
         print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateLin' + self._testMethodName)
 
         # test case check
         pass
@@ -676,11 +677,309 @@ class TestRotateLinRGB(unittest.TestCase):
         print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateLin' + self._testMethodName)
 
         # test case check
         pass
 
+
+class TestSubSamplingGray(unittest.TestCase):
+    """
+    Unit test utility for subsampling gray image
+    """
+
+    def test_image_grey_small_uint8(self):
+        test_image = get_image(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = (
+                            test_image[0::2, 0::2] +
+                            test_image[1::2, 0::2] +
+                            test_image[0::2, 1::2] +
+                            test_image[1::2, 1::2]
+                        ) / 4.0
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoSubSampling().cy_subsample_grey_uint8(test_image)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'SubSampling' + self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_grey_large_uint8(self):
+        test_image = get_image(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = (
+                            test_image[0::2, 0::2] +
+                            test_image[1::2, 0::2] +
+                            test_image[0::2, 1::2] +
+                            test_image[1::2, 1::2]
+                        ) / 4.0
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoSubSampling().cy_subsample_grey_uint8(test_image)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'SubSampling' + self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_grey_small_float(self):
+        test_image = get_image(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = (
+                            test_image[0::2, 0::2] +
+                            test_image[1::2, 0::2] +
+                            test_image[0::2, 1::2] +
+                            test_image[1::2, 1::2]
+                        ) / 4.0
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoSubSampling().cy_subsample_grey_float(test_image)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'SubSampling' + self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_grey_large_float(self):
+        test_image = get_image(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = (
+                            test_image[0::2, 0::2] +
+                            test_image[1::2, 0::2] +
+                            test_image[0::2, 1::2] +
+                            test_image[1::2, 1::2]
+                        ) / 4.0
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoSubSampling().cy_subsample_grey_float(test_image)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'SubSampling' + self._testMethodName)
+
+        # test case check
+        pass
+
+class TestSubSamplingRGB(unittest.TestCase):
+    """
+    Unit test utility for subsampling gray image
+    """
+
+    def test_image_rgb_small_uint8(self):
+        test_image = get_image(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = (
+                            test_image[0::2, 0::2] +
+                            test_image[1::2, 0::2] +
+                            test_image[0::2, 1::2] +
+                            test_image[1::2, 1::2]
+                        ) / 4.0
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoSubSampling().cy_subsample_rgb_uint8(test_image)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'SubSampling' + self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_rgb_large_uint8(self):
+        test_image = get_image(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = (
+                            test_image[0::2, 0::2] +
+                            test_image[1::2, 0::2] +
+                            test_image[0::2, 1::2] +
+                            test_image[1::2, 1::2]
+                        ) / 4.0
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoSubSampling().cy_subsample_rgb_uint8(test_image)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'SubSampling' + self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_rgb_small_float(self):
+        test_image = get_image(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = (
+                            test_image[0::2, 0::2] +
+                            test_image[1::2, 0::2] +
+                            test_image[0::2, 1::2] +
+                            test_image[1::2, 1::2]
+                        ) / 4.0
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoSubSampling().cy_subsample_rgb_float(test_image)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'SubSampling' + self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_rgb_large_float(self):
+        test_image = get_image(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = (
+                            test_image[0::2, 0::2] +
+                            test_image[1::2, 0::2] +
+                            test_image[0::2, 1::2] +
+                            test_image[1::2, 1::2]
+                        ) / 4.0
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoSubSampling().cy_subsample_rgb_float(test_image)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'SubSampling' + self._testMethodName)
+
+        # test case check
+        pass
 
 def rotateGrayNN():
     # run suite
@@ -697,7 +996,7 @@ def rotateGrayNN():
     plt.ylabel('Time taken')
     plt.xlabel('Numpy vs Cython')
     plt.title('Rotation of gray images (with NN-interpolation)')
-    plt.savefig('Report\RotateGrayNN.png')
+    plt.savefig('Report\\RotateGrayNN.png')
     plt.close()
     _result_timings = {}
 
@@ -717,7 +1016,7 @@ def rotateRGBNN():
     plt.ylabel('Time taken')
     plt.xlabel('Numpy vs Cython')
     plt.title('Rotation of RGB images (with NN-interpolation)')
-    plt.savefig('Report\RotateRGBNN.png')
+    plt.savefig('Report\\RotateRGBNN.png')
     plt.close()
     _result_timings = {}
 
@@ -737,7 +1036,7 @@ def rotateGrayLin():
     plt.ylabel('Time taken')
     plt.xlabel('Numpy vs Cython')
     plt.title('Rotation of gray images (with Linear-interpolation)')
-    plt.savefig('Report\RotateGrayLin.png')
+    plt.savefig('Report\\RotateGrayLin.png')
     plt.close()
     _result_timings = {}
 
@@ -757,7 +1056,47 @@ def rotateRGBLin():
     plt.ylabel('Time taken')
     plt.xlabel('Numpy vs Cython')
     plt.title('Rotation of RGB images (with Linear-interpolation)')
-    plt.savefig('Report\RotateRGBLin.png')
+    plt.savefig('Report\\RotateRGBLin.png')
+    plt.close()
+    _result_timings = {}
+
+
+def subsamplingGray():
+    # run suite
+    global _result_timings
+    custom_stream.write('\n----------------------------------------------------------------------\n')
+    custom_stream.write('\n                 *** Sub sampling of gray images  ***                 \n')
+    custom_stream.write('\n----------------------------------------------------------------------\n\n')
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestSubSamplingGray)
+    unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
+    od = collections.OrderedDict(sorted(_result_timings.items()))
+    plt.clf()
+    df2 = pd.DataFrame.from_dict(od, orient='columns')
+    df2.plot.bar()
+    plt.ylabel('Time taken')
+    plt.xlabel('Numpy vs Cython')
+    plt.title('Sub sampling of gray images')
+    plt.savefig('Report\\SubsamplingGray.png')
+    plt.close()
+    _result_timings = {}
+
+
+def subsamplingRGB():
+    # run suite
+    global _result_timings
+    custom_stream.write('\n----------------------------------------------------------------------\n')
+    custom_stream.write('\n                 *** Sub sampling of RGB images  ***                 \n')
+    custom_stream.write('\n----------------------------------------------------------------------\n\n')
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestSubSamplingRGB)
+    unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
+    od = collections.OrderedDict(sorted(_result_timings.items()))
+    plt.clf()
+    df2 = pd.DataFrame.from_dict(od, orient='columns')
+    df2.plot.bar()
+    plt.ylabel('Time taken')
+    plt.xlabel('Numpy vs Cython')
+    plt.title('Sub sampling of RGB images')
+    plt.savefig('Report\\SubsamplingRGB.png')
     plt.close()
     _result_timings = {}
 
@@ -765,8 +1104,10 @@ def rotateRGBLin():
 if __name__ == '__main__':
     #rotateGrayNN()
     #rotateRGBNN()
-    rotateGrayLin()
-    rotateRGBLin()
+    #rotateGrayLin()
+    #rotateRGBLin()
+    subsamplingGray()
+    subsamplingRGB()
 
 
 
