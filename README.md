@@ -37,7 +37,8 @@ conda install pandas
 ```
 
 ## Running the code
-+ To run the code just type
++ To run the code just type. Compilation of c code for cython will be done by the pyximport utility when you run the
+`benchmark.py` file
 ```py
 python benchmark.py
 ```
@@ -50,4 +51,4 @@ Below are the results
 + Rotate with no interpolation
 
 ![Not available check Report folder](Report/RotateGrayNN.png?raw=true "Gray image")
-![Not available check Report folder](Report/img.jpg?raw=true "RGB image")
+![Not available check Report folder](Report/RotateRGBNN.png?raw=true "RGB image")
