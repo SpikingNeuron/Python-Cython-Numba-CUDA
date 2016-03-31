@@ -8,6 +8,10 @@ import sys
 import time
 from scipy import ndimage, misc
 import matplotlib.pyplot as plt
+import collections
+import matplotlib
+import pandas as pd
+matplotlib.style.use('ggplot')
 
 # for compiling the cython code
 import pyximport
@@ -32,7 +36,7 @@ custom_stream = sys.stdout
 # config vars
 _PLOT = False
 _ITER_NUM = 1
-
+_result_timings = {}
 
 def plot_images(im0, im1, im2, im3, title):
     """
@@ -108,9 +112,10 @@ def get_image(query):
     return lena
 
 
-def print_utility(time_taken_np, time_taken_cy, time_taken_cuda, message):
+def print_utility(time_taken_np, time_taken_cy, time_taken_cuda, message, query):
     """
     print utility
+    :param query:
     :param time_taken_np:
     :type time_taken_np:
     :param time_taken_cy:
@@ -131,6 +136,11 @@ def print_utility(time_taken_np, time_taken_cy, time_taken_cuda, message):
     # custom_stream.write('\n\t\tSpeed up\t: ' + str(time_taken_cuda))
 
     custom_stream.write('\n...........')
+
+    # store results
+    args = query.split(sep='_')
+    _result_timings[args[2] + ' ' + args[3] + ' ' + args[4]] = (time_taken_np, time_taken_cy)
+
     pass
 
 
@@ -163,7 +173,7 @@ class TestRotateNNGray(unittest.TestCase):
         t3 = end - start
         t3 = 'Not available ....'
 
-        print_utility(t1, t2, t3, '')
+        print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
             plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
@@ -195,7 +205,7 @@ class TestRotateNNGray(unittest.TestCase):
         t3 = end - start
         t3 = 'Not available ....'
 
-        print_utility(t1, t2, t3, '')
+        print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
             plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
@@ -227,7 +237,7 @@ class TestRotateNNGray(unittest.TestCase):
         t3 = end - start
         t3 = 'Not available ....'
 
-        print_utility(t1, t2, t3, '')
+        print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
             plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
@@ -259,7 +269,7 @@ class TestRotateNNGray(unittest.TestCase):
         t3 = end - start
         t3 = 'Not available ....'
 
-        print_utility(t1, t2, t3, '')
+        print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
             plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
@@ -297,7 +307,7 @@ class TestRotateNNRGB(unittest.TestCase):
         t3 = end - start
         t3 = 'Not available ....'
 
-        print_utility(t1, t2, t3, '')
+        print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
             plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
@@ -329,7 +339,7 @@ class TestRotateNNRGB(unittest.TestCase):
         t3 = end - start
         t3 = 'Not available ....'
 
-        print_utility(t1, t2, t3, '')
+        print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
             plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
@@ -361,7 +371,7 @@ class TestRotateNNRGB(unittest.TestCase):
         t3 = end - start
         t3 = 'Not available ....'
 
-        print_utility(t1, t2, t3, '')
+        print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
             plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
@@ -393,7 +403,7 @@ class TestRotateNNRGB(unittest.TestCase):
         t3 = end - start
         t3 = 'Not available ....'
 
-        print_utility(t1, t2, t3, '')
+        print_utility(t1, t2, t3, '', self._testMethodName)
 
         if _PLOT:
             plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
@@ -402,17 +412,50 @@ class TestRotateNNRGB(unittest.TestCase):
         pass
 
 
-if __name__ == '__main__':
-
+def rotateGrayNN():
     # run suite
+    global _result_timings
     custom_stream.write('\n----------------------------------------------------------------------\n')
     custom_stream.write('\n       *** Rotation of gray images (with NN-interpolation) ***        \n')
     custom_stream.write('\n----------------------------------------------------------------------\n\n')
-    #suite = unittest.TestLoader().loadTestsFromTestCase(TestRotateNNGray)
-    #unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestRotateNNGray)
+    unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
+    od = collections.OrderedDict(sorted(_result_timings.items()))
+    plt.clf()
+    df2 = pd.DataFrame.from_dict(od, orient='columns')
+    df2.plot.bar()
+    plt.ylabel('Time taken')
+    plt.xlabel('Python vs Cython')
+    plt.title('Rotation of gray images (with NN-interpolation)')
+    plt.savefig('Report\RotateGrayNN.png')
+    plt.close()
+    _result_timings = {}
+
+
+def rotateRGBNN():
+    # run suite
+    global _result_timings
     custom_stream.write('\n----------------------------------------------------------------------\n')
     custom_stream.write('\n       *** Rotation of RGB images (with NN-interpolation) ***         \n')
     custom_stream.write('\n----------------------------------------------------------------------\n\n')
     suite = unittest.TestLoader().loadTestsFromTestCase(TestRotateNNRGB)
     unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
+    od = collections.OrderedDict(sorted(_result_timings.items()))
+    plt.clf()
+    df2 = pd.DataFrame.from_dict(od, orient='columns')
+    df2.plot.bar()
+    plt.ylabel('Time taken')
+    plt.xlabel('Python vs Cython')
+    plt.title('Rotation of RGB images (with NN-interpolation)')
+    plt.savefig('Report\RotateRGBNN.png')
+    plt.close()
+    _result_timings = {}
+
+
+if __name__ == '__main__':
+    rotateGrayNN()
+    rotateRGBNN()
+
+
+
 
