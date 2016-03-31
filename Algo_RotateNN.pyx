@@ -8,6 +8,39 @@ from cython import parallel
 from collections import namedtuple
 import sys
 from libc.math cimport sin, cos
+import numpy.testing as npt
+import gpuadder
+
+assert sizeof(int) == sizeof(np.int32_t)
+
+cdef extern from "Algo_RotateNN.hpp":
+    cdef cppclass C_GPUAdder "GPUAdder":
+        C_GPUAdder(np.int32_t*, int)
+        void increment()
+        void retreive()
+        void retreive_to(np.int32_t*, int)
+
+cdef class GPUAdder:
+    cdef C_GPUAdder* g
+    cdef int dim1
+
+    def __cinit__(self, np.ndarray[ndim=1, dtype=np.int32_t] arr):
+        self.dim1 = len(arr)
+        self.g = new C_GPUAdder(&arr[0], self.dim1)
+
+    def increment(self):
+        self.g.increment()
+
+    def retreive_inplace(self):
+        self.g.retreive()
+
+    def retreive(self):
+        cdef np.ndarray[ndim=1, dtype=np.int32_t] a = np.zeros(self.dim1, dtype=np.int32)
+
+        self.g.retreive_to(&a[0], self.dim1)
+
+        return a
+
 
 
 @cython.boundscheck(False)
@@ -15,16 +48,6 @@ from libc.math cimport sin, cos
 @cython.nonecheck(False)
 @cython.cdivision(True)
 cdef class AlgoRotateNN:
-
-    cdef _minmax(self, np.float64_t [:] coor, np.float64_t [:] minc, np.float64_t [:] maxc):
-        if coor[0] < minc[0]:
-            minc[0] = coor[0]
-        if coor[0] > maxc[0]:
-            maxc[0] = coor[0]
-        if coor[1] < minc[1]:
-            minc[1] = coor[1]
-        if coor[1] > maxc[1]:
-            maxc[1] = coor[1]
 
     def cy_rotate_grey_uint8(self, image, theta_):
 
@@ -77,8 +100,16 @@ cdef class AlgoRotateNN:
                 if 0 <= index_x_new <= ix and 0 <= index_y_new <= iy:
                     dst[index_x, index_y] = src[index_x_new, index_y_new]
 
-
-
-
-
         return dst
+
+
+def test():
+    arr = np.array([1,2,2,2], dtype=np.int32)
+    adder = gpuadder.GPUAdder(arr)
+    adder.increment()
+
+    adder.retreive_inplace()
+    results2 = adder.retreive()
+
+    npt.assert_array_equal(arr, [2,3,3,3])
+    npt.assert_array_equal(results2, [2,3,3,3])
