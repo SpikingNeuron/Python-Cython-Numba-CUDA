@@ -37,7 +37,7 @@ custom_stream = sys.stdout
 
 # config vars
 _PLOT = True
-_ITER_NUM = 1
+_ITER_NUM = 100
 _result_timings = {}
 
 def plot_images(im0, im1, im2, im3, title):
@@ -1102,10 +1102,10 @@ def subsamplingRGB():
 
 
 if __name__ == '__main__':
-    #rotateGrayNN()
-    #rotateRGBNN()
-    #rotateGrayLin()
-    #rotateRGBLin()
+    rotateGrayNN()
+    rotateRGBNN()
+    rotateGrayLin()
+    rotateRGBLin()
     subsamplingGray()
     subsamplingRGB()
 
