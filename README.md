@@ -47,8 +47,7 @@ python benchmark.py
   + Other images have barplots that will compare numpy and cython implementation
 
 ## Benchmark results
-Below are the results
+Below are the results (Smaller the better as time taken is the y axis)
 + Rotate with no interpolation
 
-![Not available check Report folder](Report/RotateGrayNN.png?raw=true "Gray image")
-![Not available check Report folder](Report/RotateRGBNN.png?raw=true "RGB image")
+|![Not available check Report folder](Report/RotateGrayNN.png?raw=true "Gray image")|![Not available check Report folder](Report/RotateRGBNN.png?raw=true "RGB image")|
