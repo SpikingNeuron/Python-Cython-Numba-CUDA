@@ -19,7 +19,7 @@ So basically there are eight test cases per algorithm.
 We have three implementation of these algorithms for benchmarking:
 + Python Numpy library
 + Cython
-+ CUDA with Cython (Not available work needs to be done to build compiler wrapper for nvcc to be called from python.
++ CUDA with Cython (Not available. Work needs to be done to write compiler wrapper for nvcc, to be called from python.
 The `setup.py` file will be updated soon...)
 
 ## Environment
