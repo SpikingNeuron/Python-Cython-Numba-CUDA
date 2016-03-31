@@ -48,6 +48,25 @@ python benchmark.py
 
 ## Benchmark results
 Below are the results (Smaller the better as time taken is the y axis)
-+ Rotate with no interpolation
 
++ **Rotate with no interpolation**
+
+|                                                                                   |                                                                                 |
+|-----------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
 |![Not available check Report folder](Report/RotateGrayNN.png?raw=true "Gray image")|![Not available check Report folder](Report/RotateRGBNN.png?raw=true "RGB image")|
+
+
++ **Rotate with linear interpolation**
+
+|                                                                                    |                                                                                  |
+|------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+|![Not available check Report folder](Report/RotateGrayLin.png?raw=true "Gray image")|![Not available check Report folder](Report/RotateRGBLin.png?raw=true "RGB image")|
+
+
++ **Subsampling by factor of 2**
+
+|                                                                                      |                                                                                    |
+|--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
+|![Not available check Report folder](Report/SubsamplingGray.png?raw=true "Gray image")|![Not available check Report folder](Report/SubsamplingRGB.png?raw=true "RGB image")|
+
+
