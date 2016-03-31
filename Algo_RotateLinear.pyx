@@ -10,7 +10,7 @@ import sys
 from libc.math cimport sin, cos
 
 @cython.boundscheck(False)
-@cython.wraparound(False)
+#@cython.wraparound(False)
 @cython.nonecheck(False)
 @cython.cdivision(True)
 cdef class AlgoRotateLin:

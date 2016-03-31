@@ -75,7 +75,8 @@ def plot_images(im0, im1, im2, im3, title):
     plt.imshow(im3)
     a.set_title('CUDA')
 
-    plt.show()
+    plt.savefig('Report\\' + title + '.png')
+    # plt.show()
 
 
 def get_image(query):
@@ -765,7 +766,7 @@ if __name__ == '__main__':
     #rotateGrayNN()
     #rotateRGBNN()
     rotateGrayLin()
-    #rotateRGBLin()
+    rotateRGBLin()
 
 
 
