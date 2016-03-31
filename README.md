@@ -4,34 +4,50 @@
 
 ## About Project
 
-Python is very slow. To improve the speed we can use Cython. Also most libraries that come with Python are implemented using Cython for performance. 
+This project has implementation for three algorithms:
++ Rotation without interpolation
++ Rotation with linear interpolation
++ Subsampling by factor of 2
 
-When it comes to GPU programming CUDA has good support with C++. 
+Every algorithm is tested with unittest for three different categories:
++ Two image sizes (large and small)
++ Two data types (uint8 and float)
++ Two color types (gray and RGB)
 
-But with Python we have only two options as below.
+So basically there are eight test cases per algorithm.
 
-+ PyCUDA
-    + Open source
-    + Needs to write kernels in string which is not elegant
-+ Continuum accelerate library (previously known as numbapro)
-    + Paid version
-    + Full integration with Python
-    
-Third option we have is use C++ CUDA with Cython.
-
-Advantages
-
-+ Development in pure C++ for CUDA code so all IDE functionality is available.
-+ Compile Cython code to use the C++ CUDA code 
-+ Python can easily understand Cython, and Cython can easily call C++ code
-+ Minimum overhead
-
-Disadvantage
-
-+ Need to know both C++ but this disadvantage is still there with PyCUDA but not with Continuum accelerate library 
+We have three implementation of these algorithms for benchmarking:
++ Python Numpy library
++ Cython
++ CUDA with Cython (Not available work needs to be done to build compiler wrapper for nvcc to be called from python.
+The `setup.py` file will be updated soon...)
 
 ## Environment
 + Windows 10
 + Python 3.4.3
 + Cython 0.23.4
 + CUDA 7.5
+
+## Dependencies
+```sh
+conda install python=3.5
+conda install numpy
+conda install cython
+conda install pandas
+```
+
+## Running the code
++ To run the code just type
+```py
+python benchmark.py
+```
++ The unittest framework will run and dump the results in report folder
+  + Images with test_image in their name are the output of the algorithm
+  + Other images have barplots that will compare numpy and cython implementation
+
+## Benchmark results
+Below are the results
++ Rotate with no interpolation
+
+![Not available check Report folder](Report/RotateGrayNN.png?raw=true "Gray image")
+![Not available check Report folder](Report/img.jpg?raw=true "RGB image")

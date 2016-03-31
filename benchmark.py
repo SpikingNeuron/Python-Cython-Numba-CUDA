@@ -40,6 +40,7 @@ _PLOT = True
 _ITER_NUM = 100
 _result_timings = {}
 
+
 def plot_images(im0, im1, im2, im3, title):
     """
     plot the image
