@@ -237,3 +237,4 @@ cdef class AlgoRotateNN:
                         dst[index_x, index_y, index_z] = src[index_x_new, index_y_new, index_z]
 
         return dst
+
