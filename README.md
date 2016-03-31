@@ -52,7 +52,7 @@ python benchmark.py
 ## Benchmark results
 Below are the results (Smaller the better as time taken is the y axis)
 
-The code was run for 100 iterations you cn adjust it with `_ITER_NUM` variable.
+The code was run for 100 iterations you can adjust it with `_ITER_NUM` variable.
 
 + **Rotate with no interpolation**
 
