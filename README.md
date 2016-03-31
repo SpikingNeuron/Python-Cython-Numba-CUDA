@@ -42,6 +42,7 @@ conda install pandas
 + To run the code just type. Compilation of c code for cython will be done by the pyximport utility when you run the
 `benchmark.py` file
 ```py
+git clone https://github.com/praveenneuron/Python-Cython-CUDA.git
 python benchmark.py
 ```
 + The unittest framework will run and dump the results in report folder
@@ -91,4 +92,198 @@ The code was run for 100 iterations you cn adjust it with `_ITER_NUM` variable.
 
 ```txt
 
+----------------------------------------------------------------------
+
+       *** Rotation of gray images (with NN-interpolation) ***
+
+----------------------------------------------------------------------
+
+test_image_grey_large_float (__main__.TestRotateNNGray) ...
+Time taken Numpy 	: 151.31482219696045
+Time taken Cython	: 36.94421911239624
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_grey_large_uint8 (__main__.TestRotateNNGray) ...
+Time taken Numpy 	: 123.39914846420288
+Time taken Cython	: 16.95520257949829
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_grey_small_float (__main__.TestRotateNNGray) ...
+Time taken Numpy 	: 35.40998888015747
+Time taken Cython	: 8.452341556549072
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_grey_small_uint8 (__main__.TestRotateNNGray) ...
+Time taken Numpy 	: 30.000380992889404
+Time taken Cython	: 3.7491652965545654
+Time taken CUDA  	: Not available ....
+...........ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 432.468s
+
+OK
+
+----------------------------------------------------------------------
+
+       *** Rotation of RGB images (with NN-interpolation) ***
+
+----------------------------------------------------------------------
+
+test_image_rgb_large_float (__main__.TestRotateNNRGB) ...
+Time taken Numpy 	: 591.0141146183014
+Time taken Cython	: 62.84261226654053
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_rgb_large_uint8 (__main__.TestRotateNNRGB) ...
+Time taken Numpy 	: 388.97081446647644
+Time taken Cython	: 25.296037435531616
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_rgb_small_float (__main__.TestRotateNNRGB) ...
+Time taken Numpy 	: 136.52729868888855
+Time taken Cython	: 14.830699443817139
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_rgb_small_uint8 (__main__.TestRotateNNRGB) ...
+Time taken Numpy 	: 95.43055057525635
+Time taken Cython	: 5.61405348777771
+Time taken CUDA  	: Not available ....
+...........ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 1339.251s
+
+OK
+
+----------------------------------------------------------------------
+
+     *** Rotation of gray images (with Linear-interpolation) ***
+
+----------------------------------------------------------------------
+
+test_image_grey_large_float (__main__.TestRotateLinGray) ...
+Time taken Numpy 	: 178.00181245803833
+Time taken Cython	: 46.812225580215454
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_grey_large_uint8 (__main__.TestRotateLinGray) ...
+Time taken Numpy 	: 153.71812272071838
+Time taken Cython	: 32.40706133842468
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_grey_small_float (__main__.TestRotateLinGray) ...
+Time taken Numpy 	: 43.1264967918396
+Time taken Cython	: 10.751116752624512
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_grey_small_uint8 (__main__.TestRotateLinGray) ...
+Time taken Numpy 	: 38.20052409172058
+Time taken Cython	: 6.512584924697876
+Time taken CUDA  	: Not available ....
+...........ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 535.673s
+
+OK
+
+----------------------------------------------------------------------
+
+     *** Rotation of RGB images (with Linear-interpolation) ***
+
+----------------------------------------------------------------------
+
+test_image_rgb_large_float (__main__.TestRotateLinRGB) ...
+Time taken Numpy 	: 648.240086555481
+Time taken Cython	: 143.8962905406952
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_rgb_large_uint8 (__main__.TestRotateLinRGB) ...
+Time taken Numpy 	: 478.977468252182
+Time taken Cython	: 78.14135432243347
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_rgb_small_float (__main__.TestRotateLinRGB) ...
+Time taken Numpy 	: 158.55249094963074
+Time taken Cython	: 34.45909404754639
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_rgb_small_uint8 (__main__.TestRotateLinRGB) ...
+Time taken Numpy 	: 116.78005647659302
+Time taken Cython	: 18.58473801612854
+Time taken CUDA  	: Not available ....
+...........ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 1698.162s
+
+OK
+
+----------------------------------------------------------------------
+
+                 *** Sub sampling of gray images  ***
+
+----------------------------------------------------------------------
+
+test_image_grey_large_float (__main__.TestSubSamplingGray) ...
+Time taken Numpy 	: 10.621656894683838
+Time taken Cython	: 3.1351451873779297
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_grey_large_uint8 (__main__.TestSubSamplingGray) ...
+Time taken Numpy 	: 3.7409982681274414
+Time taken Cython	: 0.7685854434967041
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_grey_small_float (__main__.TestSubSamplingGray) ...
+Time taken Numpy 	: 2.3244316577911377
+Time taken Cython	: 0.8110001087188721
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_grey_small_uint8 (__main__.TestSubSamplingGray) ...
+Time taken Numpy 	: 0.9299986362457275
+Time taken Cython	: 0.19199752807617188
+Time taken CUDA  	: Not available ....
+...........ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 31.435s
+
+OK
+
+----------------------------------------------------------------------
+
+                 *** Sub sampling of RGB images  ***
+
+----------------------------------------------------------------------
+
+test_image_rgb_large_float (__main__.TestSubSamplingRGB) ...
+Time taken Numpy 	: 30.34756565093994
+  max_open_warning, RuntimeWarning)
+Time taken Cython	: 8.097901582717896
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_rgb_large_uint8 (__main__.TestSubSamplingRGB) ...
+Time taken Numpy 	: 14.92826771736145
+Time taken Cython	: 3.053738832473755
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_rgb_small_float (__main__.TestSubSamplingRGB) ...
+Time taken Numpy 	: 8.16323471069336
+Time taken Cython	: 2.373201608657837
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_rgb_small_uint8 (__main__.TestSubSamplingRGB) ...
+Time taken Numpy 	: 3.756680965423584
+Time taken Cython	: 0.7535483837127686
+Time taken CUDA  	: Not available ....
+...........ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 79.440s
+
+OK
+
+Process finished with exit code 0
 ```
