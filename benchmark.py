@@ -28,13 +28,14 @@ cythonize('Algo_RotateLinear.pyx', annotate=True)
 cythonize('Algo_SubSampling.pyx', annotate=True)
 
 from Algo_RotateNN import AlgoRotateNN
+from Algo_RotateLinear import AlgoRotateLin
 
 # To print on console or to file
 custom_stream = sys.stdout
 # custom_stream = open("report.txt", "w", encoding="utf-8")
 
 # config vars
-_PLOT = False
+_PLOT = True
 _ITER_NUM = 1
 _result_timings = {}
 
@@ -412,6 +413,274 @@ class TestRotateNNRGB(unittest.TestCase):
         pass
 
 
+class TestRotateLinGray(unittest.TestCase):
+    """
+    Unit test utility for rotating with gray image
+    """
+
+    def test_image_grey_small_uint8(self):
+        theta = 33.33
+        test_image = get_image(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = ndimage.rotate(test_image, theta, order=1)
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoRotateLin().cy_rotate_grey_uint8(test_image, theta)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_grey_large_uint8(self):
+        theta = 33.33
+        test_image = get_image(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = ndimage.rotate(test_image, theta, order=1)
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoRotateLin().cy_rotate_grey_uint8(test_image, theta)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_grey_small_float(self):
+        theta = 33.33
+        test_image = get_image(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = ndimage.rotate(test_image, theta, order=1)
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoRotateLin().cy_rotate_grey_float(test_image, theta)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_grey_large_float(self):
+        theta = 33.33
+        test_image = get_image(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = ndimage.rotate(test_image, theta, order=1)
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoRotateLin().cy_rotate_grey_float(test_image, theta)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+
+        # test case check
+        pass
+
+
+class TestRotateLinRGB(unittest.TestCase):
+    """
+    Unit test utility for rotating with RGB image
+    """
+
+    def test_image_rgb_small_uint8(self):
+        theta = 33.33
+        test_image = get_image(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = ndimage.rotate(test_image, theta, order=1)
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoRotateLin().cy_rotate_rgb_uint8(test_image, theta)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_rgb_large_uint8(self):
+        theta = 33.33
+        test_image = get_image(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = ndimage.rotate(test_image, theta, order=1)
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoRotateLin().cy_rotate_rgb_uint8(test_image, theta)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_rgb_small_float(self):
+        theta = 33.33
+        test_image = get_image(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = ndimage.rotate(test_image, theta, order=1)
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoRotateLin().cy_rotate_rgb_float(test_image, theta)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_rgb_large_float(self):
+        theta = 33.33
+        test_image = get_image(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = ndimage.rotate(test_image, theta, order=1)
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoRotateLin().cy_rotate_rgb_float(test_image, theta)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, self._testMethodName)
+
+        # test case check
+        pass
+
+
 def rotateGrayNN():
     # run suite
     global _result_timings
@@ -452,9 +721,51 @@ def rotateRGBNN():
     _result_timings = {}
 
 
+def rotateGrayLin():
+    # run suite
+    global _result_timings
+    custom_stream.write('\n----------------------------------------------------------------------\n')
+    custom_stream.write('\n     *** Rotation of gray images (with Linear-interpolation) ***      \n')
+    custom_stream.write('\n----------------------------------------------------------------------\n\n')
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestRotateLinGray)
+    unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
+    od = collections.OrderedDict(sorted(_result_timings.items()))
+    plt.clf()
+    df2 = pd.DataFrame.from_dict(od, orient='columns')
+    df2.plot.bar()
+    plt.ylabel('Time taken')
+    plt.xlabel('Numpy vs Cython')
+    plt.title('Rotation of gray images (with Linear-interpolation)')
+    plt.savefig('Report\RotateGrayLin.png')
+    plt.close()
+    _result_timings = {}
+
+
+def rotateRGBLin():
+    # run suite
+    global _result_timings
+    custom_stream.write('\n----------------------------------------------------------------------\n')
+    custom_stream.write('\n     *** Rotation of RGB images (with Linear-interpolation) ***       \n')
+    custom_stream.write('\n----------------------------------------------------------------------\n\n')
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestRotateLinRGB)
+    unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
+    od = collections.OrderedDict(sorted(_result_timings.items()))
+    plt.clf()
+    df2 = pd.DataFrame.from_dict(od, orient='columns')
+    df2.plot.bar()
+    plt.ylabel('Time taken')
+    plt.xlabel('Numpy vs Cython')
+    plt.title('Rotation of RGB images (with Linear-interpolation)')
+    plt.savefig('Report\RotateRGBLin.png')
+    plt.close()
+    _result_timings = {}
+
+
 if __name__ == '__main__':
-    rotateGrayNN()
-    rotateRGBNN()
+    #rotateGrayNN()
+    #rotateRGBNN()
+    rotateGrayLin()
+    #rotateRGBLin()
 
 
 
