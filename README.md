@@ -23,6 +23,8 @@ We have three implementation of these algorithms for benchmarking:
 + CUDA with Cython (Not available. Work needs to be done to write compiler wrapper for nvcc, to be called from python.
 The `setup.py` file will be updated soon...)
 
+:construction: :warning: CUDA part still needs nvcc compiler patch (Only Numpy and Cython will work) :warning: :construction:
+
 ## Environment
 + Windows 10 (or Ubuntu 14.04)
 + Python 3.4.3
