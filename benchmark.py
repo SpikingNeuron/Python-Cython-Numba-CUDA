@@ -23,10 +23,12 @@ pyximport.install(inplace=False,
 from Cython.Build import cythonize
 
 # TODO: check with multi thread
+cythonize('Algo_Blending.pyx', annotate=True)
 cythonize('Algo_RotateNN.pyx', annotate=True)
 cythonize('Algo_RotateLinear.pyx', annotate=True)
 cythonize('Algo_SubSampling.pyx', annotate=True)
 
+from Algo_Blending import AlgoBlending
 from Algo_RotateNN import AlgoRotateNN
 from Algo_RotateLinear import AlgoRotateLin
 from Algo_SubSampling import AlgoSubSampling
@@ -37,7 +39,7 @@ custom_stream = sys.stdout
 
 # config vars
 _PLOT = True
-_ITER_NUM = 1
+_ITER_NUM = 100
 _result_timings = {}
 
 
@@ -81,7 +83,7 @@ def plot_images(im0, im1, im2, im3, title):
     # plt.show()
 
 
-def get_image(query):
+def get_image_lena(query):
     """
     get the image
     :param query:
@@ -89,6 +91,7 @@ def get_image(query):
     :return:
     :rtype:
     """
+
     args = query.split(sep='_')
     lena = None
 
@@ -114,6 +117,42 @@ def get_image(query):
         raise ValueError('Invalid size. Allowed uint8 or float')
 
     return lena
+
+
+def get_image_star(query):
+    """
+    get the image
+    :param query:
+    :type query:
+    :return:
+    :rtype:
+    """
+
+    args = query.split(sep='_')
+    star = None
+
+    if args[2] == 'grey':
+        star = ndimage.imread('star.jpg', mode='L')
+    elif args[2] == 'rgb':
+        star = ndimage.imread('star.jpg', mode='RGB')
+    else:
+        raise ValueError('Invalid color type. Allowed rgb or grey')
+
+    if args[3] == 'small':
+        star = misc.imresize(star, (2048, 2048), interp='bilinear')
+    elif args[3] == 'large':
+        star = misc.imresize(star, (4096, 4096), interp='bilinear')
+    else:
+        raise ValueError('Invalid size. Allowed small or large')
+
+    if args[4] == 'uint8':
+        star = star.astype(np.uint8)
+    elif args[4] == 'float':
+        star = star.astype(np.float)
+    else:
+        raise ValueError('Invalid size. Allowed uint8 or float')
+
+    return star
 
 
 def print_utility(time_taken_np, time_taken_cy, time_taken_cuda, message, query):
@@ -155,7 +194,7 @@ class TestRotateNNGray(unittest.TestCase):
 
     def test_image_grey_small_uint8(self):
         theta = 33.33
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -187,7 +226,7 @@ class TestRotateNNGray(unittest.TestCase):
 
     def test_image_grey_large_uint8(self):
         theta = 33.33
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -219,7 +258,7 @@ class TestRotateNNGray(unittest.TestCase):
 
     def test_image_grey_small_float(self):
         theta = 33.33
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -251,7 +290,7 @@ class TestRotateNNGray(unittest.TestCase):
 
     def test_image_grey_large_float(self):
         theta = 33.33
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -289,7 +328,7 @@ class TestRotateNNRGB(unittest.TestCase):
 
     def test_image_rgb_small_uint8(self):
         theta = 33.33
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -321,7 +360,7 @@ class TestRotateNNRGB(unittest.TestCase):
 
     def test_image_rgb_large_uint8(self):
         theta = 33.33
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -353,7 +392,7 @@ class TestRotateNNRGB(unittest.TestCase):
 
     def test_image_rgb_small_float(self):
         theta = 33.33
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -385,7 +424,7 @@ class TestRotateNNRGB(unittest.TestCase):
 
     def test_image_rgb_large_float(self):
         theta = 33.33
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -423,7 +462,7 @@ class TestRotateLinGray(unittest.TestCase):
 
     def test_image_grey_small_uint8(self):
         theta = 33.33
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -455,7 +494,7 @@ class TestRotateLinGray(unittest.TestCase):
 
     def test_image_grey_large_uint8(self):
         theta = 33.33
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -487,7 +526,7 @@ class TestRotateLinGray(unittest.TestCase):
 
     def test_image_grey_small_float(self):
         theta = 33.33
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -519,7 +558,7 @@ class TestRotateLinGray(unittest.TestCase):
 
     def test_image_grey_large_float(self):
         theta = 33.33
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -557,7 +596,7 @@ class TestRotateLinRGB(unittest.TestCase):
 
     def test_image_rgb_small_uint8(self):
         theta = 33.33
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -589,7 +628,7 @@ class TestRotateLinRGB(unittest.TestCase):
 
     def test_image_rgb_large_uint8(self):
         theta = 33.33
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -621,7 +660,7 @@ class TestRotateLinRGB(unittest.TestCase):
 
     def test_image_rgb_small_float(self):
         theta = 33.33
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -653,7 +692,7 @@ class TestRotateLinRGB(unittest.TestCase):
 
     def test_image_rgb_large_float(self):
         theta = 33.33
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -690,7 +729,7 @@ class TestSubSamplingGray(unittest.TestCase):
     """
 
     def test_image_grey_small_uint8(self):
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -726,7 +765,7 @@ class TestSubSamplingGray(unittest.TestCase):
         pass
 
     def test_image_grey_large_uint8(self):
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -762,7 +801,7 @@ class TestSubSamplingGray(unittest.TestCase):
         pass
 
     def test_image_grey_small_float(self):
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -798,7 +837,7 @@ class TestSubSamplingGray(unittest.TestCase):
         pass
 
     def test_image_grey_large_float(self):
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -833,13 +872,14 @@ class TestSubSamplingGray(unittest.TestCase):
         # test case check
         pass
 
+
 class TestSubSamplingRGB(unittest.TestCase):
     """
     Unit test utility for subsampling gray image
     """
 
     def test_image_rgb_small_uint8(self):
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -875,7 +915,7 @@ class TestSubSamplingRGB(unittest.TestCase):
         pass
 
     def test_image_rgb_large_uint8(self):
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -911,7 +951,7 @@ class TestSubSamplingRGB(unittest.TestCase):
         pass
 
     def test_image_rgb_small_float(self):
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -947,7 +987,7 @@ class TestSubSamplingRGB(unittest.TestCase):
         pass
 
     def test_image_rgb_large_float(self):
-        test_image = get_image(self._testMethodName)
+        test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
         for i in range(_ITER_NUM):
@@ -981,6 +1021,275 @@ class TestSubSamplingRGB(unittest.TestCase):
 
         # test case check
         pass
+
+
+class TestBlendingGray(unittest.TestCase):
+    """
+    Unit test utility for Blending gray image
+    """
+
+    def test_image_grey_small_uint8(self):
+        test_image = get_image_lena(self._testMethodName)
+        star_image = get_image_star(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = np.clip((test_image + star_image)/2, 0, 255)
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoBlending().cy_blending_grey_uint8(test_image, star_image)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'Blending' + self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_grey_large_uint8(self):
+        test_image = get_image_lena(self._testMethodName)
+        star_image = get_image_star(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = np.clip((test_image + star_image) / 2, 0, 255)
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoBlending().cy_blending_grey_uint8(test_image, star_image)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'Blending' + self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_grey_small_float(self):
+        test_image = get_image_lena(self._testMethodName)
+        star_image = get_image_star(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = np.clip((test_image + star_image) / 2, 0, 255)
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoBlending().cy_blending_grey_float(test_image, star_image)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'Blending' + self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_grey_large_float(self):
+        test_image = get_image_lena(self._testMethodName)
+        star_image = get_image_star(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = np.clip((test_image + star_image) / 2, 0, 255)
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoBlending().cy_blending_grey_float(test_image, star_image)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'Blending' + self._testMethodName)
+
+        # test case check
+        pass
+
+
+class TestBlendingRGB(unittest.TestCase):
+    """
+    Unit test utility for Blending RGB image
+    """
+
+    def test_image_rgb_small_uint8(self):
+        test_image = get_image_lena(self._testMethodName)
+        star_image = get_image_star(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = np.clip((test_image + star_image)/2, 0, 255)
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoBlending().cy_blending_rgb_uint8(test_image, star_image)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'Blending' + self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_rgb_large_uint8(self):
+        test_image = get_image_lena(self._testMethodName)
+        star_image = get_image_star(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = np.clip((test_image + star_image) / 2, 0, 255)
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoBlending().cy_blending_rgb_uint8(test_image, star_image)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'Blending' + self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_rgb_small_float(self):
+        test_image = get_image_lena(self._testMethodName)
+        star_image = get_image_star(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = np.clip((test_image + star_image) / 2, 0, 255)
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoBlending().cy_blending_rgb_float(test_image, star_image)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'Blending' + self._testMethodName)
+
+        # test case check
+        pass
+
+    def test_image_rgb_large_float(self):
+        test_image = get_image_lena(self._testMethodName)
+        star_image = get_image_star(self._testMethodName)
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest1 = np.clip((test_image + star_image) / 2, 0, 255)
+        end = time.time()
+        t1 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            img_dest2 = AlgoBlending().cy_blending_rgb_float(test_image, star_image)
+        end = time.time()
+        t2 = end - start
+
+        start = time.time()
+        for i in range(_ITER_NUM):
+            # img_dest3 = ndimage.rotate(test_image, theta, order=1)
+            pass
+        end = time.time()
+        t3 = end - start
+        t3 = 'Not available ....'
+
+        print_utility(t1, t2, t3, '', self._testMethodName)
+
+        if _PLOT:
+            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'Blending' + self._testMethodName)
+
+        # test case check
+        pass
+
 
 def rotateGrayNN():
     # run suite
@@ -1102,7 +1411,49 @@ def subsamplingRGB():
     _result_timings = {}
 
 
+def blendingGray():
+    # run suite
+    global _result_timings
+    custom_stream.write('\n----------------------------------------------------------------------\n')
+    custom_stream.write('\n                   *** Blending of gray images  ***                   \n')
+    custom_stream.write('\n----------------------------------------------------------------------\n\n')
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestBlendingGray)
+    unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
+    od = collections.OrderedDict(sorted(_result_timings.items()))
+    plt.clf()
+    df2 = pd.DataFrame.from_dict(od, orient='columns')
+    df2.plot.bar()
+    plt.ylabel('Time taken')
+    plt.xlabel('Numpy vs Cython')
+    plt.title('Blending of gray images')
+    plt.savefig('Report\\BlendingGray.png')
+    plt.close()
+    _result_timings = {}
+
+
+def blendingRGB():
+    # run suite
+    global _result_timings
+    custom_stream.write('\n----------------------------------------------------------------------\n')
+    custom_stream.write('\n                   *** Blending of RGB images  ***                    \n')
+    custom_stream.write('\n----------------------------------------------------------------------\n\n')
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestBlendingRGB)
+    unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
+    od = collections.OrderedDict(sorted(_result_timings.items()))
+    plt.clf()
+    df2 = pd.DataFrame.from_dict(od, orient='columns')
+    df2.plot.bar()
+    plt.ylabel('Time taken')
+    plt.xlabel('Numpy vs Cython')
+    plt.title('Blending of RGB images')
+    plt.savefig('Report\\BlendingRGB.png')
+    plt.close()
+    _result_timings = {}
+
+
 if __name__ == '__main__':
+    blendingGray()
+    blendingRGB()
     rotateGrayNN()
     rotateRGBNN()
     rotateGrayLin()

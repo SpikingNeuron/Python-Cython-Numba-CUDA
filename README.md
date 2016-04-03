@@ -4,7 +4,8 @@
 
 ## About Project
 
-This project has implementation for three algorithms:
+This project has implementation for below algorithms:
++ Blending of two images
 + Rotation without interpolation
 + Rotation with linear interpolation
 + Subsampling by factor of 2
@@ -54,6 +55,13 @@ Below are the results (Smaller the better as time taken is the y axis)
 
 The code was run for 100 iterations you can adjust it with `_ITER_NUM` variable.
 
++ **Blending of two images**
+
+|                                                                                   |                                                                                 |
+|-----------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+|![Not available check Report folder](Report/BlendingGray.png?raw=true "Gray image")|![Not available check Report folder](Report/BlendingRGB.png?raw=true "RGB image")|
+
+
 + **Rotate with no interpolation**
 
 |                                                                                   |                                                                                 |
@@ -76,6 +84,10 @@ The code was run for 100 iterations you can adjust it with `_ITER_NUM` variable.
 
 ## Output of algorithms
 
++ **Blending of two images**
+
+![Not available check Report folder](Report/Blendingtest_image_grey_large_uint8.png?raw=true "Gray image")
+
 + **Rotate with no interpolation**
 
 ![Not available check Report folder](Report/RotateNNtest_image_rgb_small_uint8.png?raw=true "Gray image")
@@ -91,6 +103,70 @@ The code was run for 100 iterations you can adjust it with `_ITER_NUM` variable.
 ## Unittest log
 
 ```txt
+
+----------------------------------------------------------------------
+
+                   *** Blending of gray images  ***
+
+----------------------------------------------------------------------
+
+test_image_grey_large_float (__main__.TestBlendingGray) ...
+Time taken Numpy 	: 22.71826696395874
+Time taken Cython	: 8.578590869903564
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_grey_large_uint8 (__main__.TestBlendingGray) ...
+Time taken Numpy 	: 17.102105617523193
+Time taken Cython	: 2.519599199295044
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_grey_small_float (__main__.TestBlendingGray) ...
+Time taken Numpy 	: 5.634594202041626
+Time taken Cython	: 2.110654592514038
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_grey_small_uint8 (__main__.TestBlendingGray) ...
+Time taken Numpy 	: 4.269731521606445
+Time taken Cython	: 0.6175847053527832
+Time taken CUDA  	: Not available ....
+...........ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 82.689s
+
+OK
+
+----------------------------------------------------------------------
+
+                   *** Blending of RGB images  ***
+
+----------------------------------------------------------------------
+
+test_image_rgb_large_float (__main__.TestBlendingRGB) ...
+Time taken Numpy 	: 72.8106141090393
+Time taken Cython	: 27.211707830429077
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_rgb_large_uint8 (__main__.TestBlendingRGB) ...
+Time taken Numpy 	: 51.59686350822449
+Time taken Cython	: 7.60575270652771
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_rgb_small_float (__main__.TestBlendingRGB) ...
+Time taken Numpy 	: 16.564209699630737
+Time taken Cython	: 5.886641979217529
+Time taken CUDA  	: Not available ....
+...........ok
+test_image_rgb_small_uint8 (__main__.TestBlendingRGB) ...
+Time taken Numpy 	: 12.357579469680786
+Time taken Cython	: 1.907670497894287
+Time taken CUDA  	: Not available ....
+...........ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 211.822s
+
+OK
 
 ----------------------------------------------------------------------
 
