@@ -1,0 +1,15 @@
+*.c
+*.html
+.idea/.name
+.idea/dictionaries/neuron.xml
+.idea/encodings.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/Python-Cython-CUDA.iml
+.idea/vcs.xml
+.idea/workspace.xml
+build/temp.win-amd64-3.5/Release/Algo_RotateNN.obj
+report.txt
+__pycache__/trace.cpython-35.pyc
