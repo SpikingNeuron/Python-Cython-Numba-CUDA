@@ -35,7 +35,6 @@ The `setup.py` file will be updated soon...)
 
 ## Dependencies
 ```sh
-conda install python=3.5
 conda install numpy
 conda install cython
 conda install pandas
