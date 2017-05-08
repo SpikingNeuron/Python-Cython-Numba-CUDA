@@ -11,27 +11,28 @@ import matplotlib.pyplot as plt
 import collections
 import matplotlib
 import pandas as pd
-matplotlib.style.use('ggplot')
-
-# for compiling the cython code
 import pyximport
-pyximport.install(inplace=False,
-                  setup_args={"include_dirs": np.get_include()},
-                  reload_support=True)
 
-# Generate c and html file that shows respective c code
 from Cython.Build import cythonize
-
-# TODO: check with multi thread
-cythonize('Algo_Blending.pyx', annotate=True)
-cythonize('Algo_RotateNN.pyx', annotate=True)
-cythonize('Algo_RotateLinear.pyx', annotate=True)
-cythonize('Algo_SubSampling.pyx', annotate=True)
 
 from Algo_Blending import AlgoBlending
 from Algo_RotateNN import AlgoRotateNN
 from Algo_RotateLinear import AlgoRotateLin
 from Algo_SubSampling import AlgoSubSampling
+
+matplotlib.style.use('ggplot')
+
+# for compiling the cython code
+pyximport.install(inplace=False,
+                  setup_args={"include_dirs": np.get_include()},
+                  reload_support=True)
+
+# Generate c and html file that shows respective c code
+# TODO: check with multi thread
+cythonize('Algo_Blending.pyx', annotate=True)
+cythonize('Algo_RotateNN.pyx', annotate=True)
+cythonize('Algo_RotateLinear.pyx', annotate=True)
+cythonize('Algo_SubSampling.pyx', annotate=True)
 
 # To print on console or to file
 custom_stream = sys.stdout
@@ -98,7 +99,6 @@ def get_image_lena(query):
     """
 
     args = query.split(sep='_')
-    lena = None
 
     if args[2] == 'grey':
         lena = ndimage.imread('lena.jpg', mode='L')
@@ -134,7 +134,6 @@ def get_image_star(query):
     """
 
     args = query.split(sep='_')
-    star = None
 
     if args[2] == 'grey':
         star = ndimage.imread('star.jpg', mode='L')
@@ -160,7 +159,8 @@ def get_image_star(query):
     return star
 
 
-def print_utility(time_taken_np, time_taken_cy, time_taken_cuda, message, query):
+def print_utility(time_taken_np, time_taken_cy,
+                  time_taken_cuda, query):
     """
     print utility
     :param query:
@@ -170,8 +170,6 @@ def print_utility(time_taken_np, time_taken_cy, time_taken_cuda, message, query)
     :type time_taken_cy:
     :param time_taken_cuda:
     :type time_taken_cuda:
-    :param message:
-    :type message:
     :return:
     :rtype:
     """
@@ -179,7 +177,8 @@ def print_utility(time_taken_np, time_taken_cy, time_taken_cuda, message, query)
     # custom_stream.write('\n' + message)
     custom_stream.write('\nTime taken Numpy \t: ' + str(time_taken_np))
     custom_stream.write('\nTime taken Cython\t: ' + str(time_taken_cy))
-    # custom_stream.write('\n\t\tSpeed up\t: ' + str(time_taken_np/time_taken_cy))
+    # custom_stream.write('\n\t\tSpeed up\t: ' +
+    #                     str(time_taken_np/time_taken_cy))
     custom_stream.write('\nTime taken CUDA  \t: ' + str(time_taken_cuda))
     # custom_stream.write('\n\t\tSpeed up\t: ' + str(time_taken_cuda))
 
@@ -187,7 +186,8 @@ def print_utility(time_taken_np, time_taken_cy, time_taken_cuda, message, query)
 
     # store results
     args = query.split(sep='_')
-    _result_timings[args[2] + ' ' + args[3] + ' ' + args[4]] = (time_taken_np, time_taken_cy)
+    _result_timings[args[2] + ' ' + args[3] + ' ' + args[4]] = \
+        (time_taken_np, time_taken_cy)
 
     pass
 
@@ -198,6 +198,10 @@ class TestRotateNNGray(unittest.TestCase):
     """
 
     def test_image_grey_small_uint8(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         theta = 33.33
         test_image = get_image_lena(self._testMethodName)
 
@@ -218,18 +222,23 @@ class TestRotateNNGray(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=0)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateNN' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'RotateNN' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_grey_large_uint8(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         theta = 33.33
         test_image = get_image_lena(self._testMethodName)
 
@@ -250,18 +259,23 @@ class TestRotateNNGray(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=0)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateNN' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'RotateNN' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_grey_small_float(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         theta = 33.33
         test_image = get_image_lena(self._testMethodName)
 
@@ -282,18 +296,23 @@ class TestRotateNNGray(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=0)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateNN' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'RotateNN' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_grey_large_float(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         theta = 33.33
         test_image = get_image_lena(self._testMethodName)
 
@@ -314,13 +333,14 @@ class TestRotateNNGray(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=0)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateNN' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'RotateNN' + self._testMethodName)
 
         # test case check
         pass
@@ -332,6 +352,10 @@ class TestRotateNNRGB(unittest.TestCase):
     """
 
     def test_image_rgb_small_uint8(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         theta = 33.33
         test_image = get_image_lena(self._testMethodName)
 
@@ -352,18 +376,23 @@ class TestRotateNNRGB(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=0)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateNN' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2,
+                        'RotateNN' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_rgb_large_uint8(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         theta = 33.33
         test_image = get_image_lena(self._testMethodName)
 
@@ -384,18 +413,23 @@ class TestRotateNNRGB(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=0)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateNN' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2,
+                        'RotateNN' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_rgb_small_float(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         theta = 33.33
         test_image = get_image_lena(self._testMethodName)
 
@@ -416,18 +450,23 @@ class TestRotateNNRGB(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=0)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateNN' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2,
+                        'RotateNN' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_rgb_large_float(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         theta = 33.33
         test_image = get_image_lena(self._testMethodName)
 
@@ -448,13 +487,14 @@ class TestRotateNNRGB(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=0)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateNN' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2, img_dest2,
+                        'RotateNN' + self._testMethodName)
 
         # test case check
         pass
@@ -466,6 +506,10 @@ class TestRotateLinGray(unittest.TestCase):
     """
 
     def test_image_grey_small_uint8(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         theta = 33.33
         test_image = get_image_lena(self._testMethodName)
 
@@ -486,18 +530,23 @@ class TestRotateLinGray(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateLin' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'RotateLin' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_grey_large_uint8(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         theta = 33.33
         test_image = get_image_lena(self._testMethodName)
 
@@ -518,18 +567,23 @@ class TestRotateLinGray(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateLin' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'RotateLin' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_grey_small_float(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         theta = 33.33
         test_image = get_image_lena(self._testMethodName)
 
@@ -550,18 +604,23 @@ class TestRotateLinGray(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateLin' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'RotateLin' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_grey_large_float(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         theta = 33.33
         test_image = get_image_lena(self._testMethodName)
 
@@ -582,13 +641,14 @@ class TestRotateLinGray(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateLin' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'RotateLin' + self._testMethodName)
 
         # test case check
         pass
@@ -600,6 +660,10 @@ class TestRotateLinRGB(unittest.TestCase):
     """
 
     def test_image_rgb_small_uint8(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         theta = 33.33
         test_image = get_image_lena(self._testMethodName)
 
@@ -620,18 +684,23 @@ class TestRotateLinRGB(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateLin' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'RotateLin' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_rgb_large_uint8(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         theta = 33.33
         test_image = get_image_lena(self._testMethodName)
 
@@ -652,18 +721,23 @@ class TestRotateLinRGB(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateLin' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'RotateLin' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_rgb_small_float(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         theta = 33.33
         test_image = get_image_lena(self._testMethodName)
 
@@ -684,18 +758,23 @@ class TestRotateLinRGB(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateLin' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'RotateLin' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_rgb_large_float(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         theta = 33.33
         test_image = get_image_lena(self._testMethodName)
 
@@ -716,13 +795,14 @@ class TestRotateLinRGB(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'RotateLin' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'RotateLin' + self._testMethodName)
 
         # test case check
         pass
@@ -734,6 +814,10 @@ class TestSubSamplingGray(unittest.TestCase):
     """
 
     def test_image_grey_small_uint8(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
@@ -758,18 +842,23 @@ class TestSubSamplingGray(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'SubSampling' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'SubSampling' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_grey_large_uint8(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
@@ -794,18 +883,23 @@ class TestSubSamplingGray(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'SubSampling' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'SubSampling' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_grey_small_float(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
@@ -830,18 +924,23 @@ class TestSubSamplingGray(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'SubSampling' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'SubSampling' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_grey_large_float(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
@@ -866,13 +965,14 @@ class TestSubSamplingGray(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'SubSampling' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'SubSampling' + self._testMethodName)
 
         # test case check
         pass
@@ -884,6 +984,10 @@ class TestSubSamplingRGB(unittest.TestCase):
     """
 
     def test_image_rgb_small_uint8(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
@@ -908,18 +1012,23 @@ class TestSubSamplingRGB(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'SubSampling' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'SubSampling' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_rgb_large_uint8(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
@@ -944,18 +1053,23 @@ class TestSubSamplingRGB(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'SubSampling' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'SubSampling' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_rgb_small_float(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
@@ -980,18 +1094,23 @@ class TestSubSamplingRGB(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'SubSampling' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'SubSampling' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_rgb_large_float(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         test_image = get_image_lena(self._testMethodName)
 
         start = time.time()
@@ -1016,13 +1135,14 @@ class TestSubSamplingRGB(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'SubSampling' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'SubSampling' + self._testMethodName)
 
         # test case check
         pass
@@ -1034,6 +1154,10 @@ class TestBlendingGray(unittest.TestCase):
     """
 
     def test_image_grey_small_uint8(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         test_image = get_image_lena(self._testMethodName)
         star_image = get_image_star(self._testMethodName)
 
@@ -1045,7 +1169,8 @@ class TestBlendingGray(unittest.TestCase):
 
         start = time.time()
         for i in range(_ITER_NUM):
-            img_dest2 = AlgoBlending().cy_blending_grey_uint8(test_image, star_image)
+            img_dest2 = AlgoBlending().cy_blending_grey_uint8(
+                test_image, star_image)
         end = time.time()
         t2 = end - start
 
@@ -1054,18 +1179,23 @@ class TestBlendingGray(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'Blending' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'Blending' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_grey_large_uint8(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         test_image = get_image_lena(self._testMethodName)
         star_image = get_image_star(self._testMethodName)
 
@@ -1077,7 +1207,8 @@ class TestBlendingGray(unittest.TestCase):
 
         start = time.time()
         for i in range(_ITER_NUM):
-            img_dest2 = AlgoBlending().cy_blending_grey_uint8(test_image, star_image)
+            img_dest2 = AlgoBlending().cy_blending_grey_uint8(
+                test_image, star_image)
         end = time.time()
         t2 = end - start
 
@@ -1086,18 +1217,23 @@ class TestBlendingGray(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'Blending' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'Blending' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_grey_small_float(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         test_image = get_image_lena(self._testMethodName)
         star_image = get_image_star(self._testMethodName)
 
@@ -1109,7 +1245,8 @@ class TestBlendingGray(unittest.TestCase):
 
         start = time.time()
         for i in range(_ITER_NUM):
-            img_dest2 = AlgoBlending().cy_blending_grey_float(test_image, star_image)
+            img_dest2 = AlgoBlending().cy_blending_grey_float(
+                test_image, star_image)
         end = time.time()
         t2 = end - start
 
@@ -1118,18 +1255,23 @@ class TestBlendingGray(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'Blending' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'Blending' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_grey_large_float(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         test_image = get_image_lena(self._testMethodName)
         star_image = get_image_star(self._testMethodName)
 
@@ -1141,7 +1283,8 @@ class TestBlendingGray(unittest.TestCase):
 
         start = time.time()
         for i in range(_ITER_NUM):
-            img_dest2 = AlgoBlending().cy_blending_grey_float(test_image, star_image)
+            img_dest2 = AlgoBlending().cy_blending_grey_float(
+                test_image, star_image)
         end = time.time()
         t2 = end - start
 
@@ -1150,13 +1293,14 @@ class TestBlendingGray(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'Blending' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'Blending' + self._testMethodName)
 
         # test case check
         pass
@@ -1168,6 +1312,10 @@ class TestBlendingRGB(unittest.TestCase):
     """
 
     def test_image_rgb_small_uint8(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         test_image = get_image_lena(self._testMethodName)
         star_image = get_image_star(self._testMethodName)
 
@@ -1179,7 +1327,8 @@ class TestBlendingRGB(unittest.TestCase):
 
         start = time.time()
         for i in range(_ITER_NUM):
-            img_dest2 = AlgoBlending().cy_blending_rgb_uint8(test_image, star_image)
+            img_dest2 = AlgoBlending().cy_blending_rgb_uint8(
+                test_image, star_image)
         end = time.time()
         t2 = end - start
 
@@ -1188,18 +1337,23 @@ class TestBlendingRGB(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'Blending' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'Blending' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_rgb_large_uint8(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         test_image = get_image_lena(self._testMethodName)
         star_image = get_image_star(self._testMethodName)
 
@@ -1211,7 +1365,8 @@ class TestBlendingRGB(unittest.TestCase):
 
         start = time.time()
         for i in range(_ITER_NUM):
-            img_dest2 = AlgoBlending().cy_blending_rgb_uint8(test_image, star_image)
+            img_dest2 = AlgoBlending().cy_blending_rgb_uint8(
+                test_image, star_image)
         end = time.time()
         t2 = end - start
 
@@ -1220,18 +1375,23 @@ class TestBlendingRGB(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'Blending' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'Blending' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_rgb_small_float(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         test_image = get_image_lena(self._testMethodName)
         star_image = get_image_star(self._testMethodName)
 
@@ -1243,7 +1403,8 @@ class TestBlendingRGB(unittest.TestCase):
 
         start = time.time()
         for i in range(_ITER_NUM):
-            img_dest2 = AlgoBlending().cy_blending_rgb_float(test_image, star_image)
+            img_dest2 = AlgoBlending().cy_blending_rgb_float(
+                test_image, star_image)
         end = time.time()
         t2 = end - start
 
@@ -1252,18 +1413,23 @@ class TestBlendingRGB(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'Blending' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'Blending' + self._testMethodName)
 
         # test case check
         pass
 
     def test_image_rgb_large_float(self):
+
+        img_dest1 = None
+        img_dest2 = None
+
         test_image = get_image_lena(self._testMethodName)
         star_image = get_image_star(self._testMethodName)
 
@@ -1275,7 +1441,8 @@ class TestBlendingRGB(unittest.TestCase):
 
         start = time.time()
         for i in range(_ITER_NUM):
-            img_dest2 = AlgoBlending().cy_blending_rgb_float(test_image, star_image)
+            img_dest2 = AlgoBlending().cy_blending_rgb_float(
+                test_image, star_image)
         end = time.time()
         t2 = end - start
 
@@ -1284,13 +1451,14 @@ class TestBlendingRGB(unittest.TestCase):
             # img_dest3 = ndimage.rotate(test_image, theta, order=1)
             pass
         end = time.time()
-        t3 = end - start
-        t3 = 'Not available ....'
+        # t3 = end - start
+        t3 = 'Not available ....' + str(end - start)
 
-        print_utility(t1, t2, t3, '', self._testMethodName)
+        print_utility(t1, t2, t3, self._testMethodName)
 
         if _PLOT:
-            plot_images(test_image, img_dest1, img_dest2, img_dest2, 'Blending' + self._testMethodName)
+            plot_images(test_image, img_dest1, img_dest2,
+                        img_dest2, 'Blending' + self._testMethodName)
 
         # test case check
         pass
@@ -1299,9 +1467,12 @@ class TestBlendingRGB(unittest.TestCase):
 def rotateNNGray():
     # run suite
     global _result_timings
-    custom_stream.write('\n----------------------------------------------------------------------\n')
-    custom_stream.write('\n       *** Rotation of gray images (with NN-interpolation) ***        \n')
-    custom_stream.write('\n----------------------------------------------------------------------\n\n')
+    custom_stream.write('\n-----------------------------------------'
+                        '-----------------------------\n')
+    custom_stream.write('\n       *** Rotation of gray images (with '
+                        'NN-interpolation) ***        \n')
+    custom_stream.write('\n-----------------------------------------'
+                        '-----------------------------\n\n')
     suite = unittest.TestLoader().loadTestsFromTestCase(TestRotateNNGray)
     unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
     od = collections.OrderedDict(sorted(_result_timings.items()))
@@ -1319,9 +1490,12 @@ def rotateNNGray():
 def rotateNNRGB():
     # run suite
     global _result_timings
-    custom_stream.write('\n----------------------------------------------------------------------\n')
-    custom_stream.write('\n       *** Rotation of RGB images (with NN-interpolation) ***         \n')
-    custom_stream.write('\n----------------------------------------------------------------------\n\n')
+    custom_stream.write('\n----------------------------------------'
+                        '------------------------------\n')
+    custom_stream.write('\n       *** Rotation of RGB images (with '
+                        'NN-interpolation) ***         \n')
+    custom_stream.write('\n----------------------------------------'
+                        '------------------------------\n\n')
     suite = unittest.TestLoader().loadTestsFromTestCase(TestRotateNNRGB)
     unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
     od = collections.OrderedDict(sorted(_result_timings.items()))
@@ -1339,9 +1513,12 @@ def rotateNNRGB():
 def rotateLinGray():
     # run suite
     global _result_timings
-    custom_stream.write('\n----------------------------------------------------------------------\n')
-    custom_stream.write('\n     *** Rotation of gray images (with Linear-interpolation) ***      \n')
-    custom_stream.write('\n----------------------------------------------------------------------\n\n')
+    custom_stream.write('\n---------------------------------------'
+                        '-------------------------------\n')
+    custom_stream.write('\n     *** Rotation of gray images (with '
+                        'Linear-interpolation) ***      \n')
+    custom_stream.write('\n---------------------------------------'
+                        '-------------------------------\n\n')
     suite = unittest.TestLoader().loadTestsFromTestCase(TestRotateLinGray)
     unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
     od = collections.OrderedDict(sorted(_result_timings.items()))
@@ -1359,9 +1536,12 @@ def rotateLinGray():
 def rotateLinRGB():
     # run suite
     global _result_timings
-    custom_stream.write('\n----------------------------------------------------------------------\n')
-    custom_stream.write('\n     *** Rotation of RGB images (with Linear-interpolation) ***       \n')
-    custom_stream.write('\n----------------------------------------------------------------------\n\n')
+    custom_stream.write('\n--------------------------------------'
+                        '--------------------------------\n')
+    custom_stream.write('\n     *** Rotation of RGB images (with '
+                        'Linear-interpolation) ***       \n')
+    custom_stream.write('\n--------------------------------------'
+                        '--------------------------------\n\n')
     suite = unittest.TestLoader().loadTestsFromTestCase(TestRotateLinRGB)
     unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
     od = collections.OrderedDict(sorted(_result_timings.items()))
@@ -1379,9 +1559,12 @@ def rotateLinRGB():
 def subsamplingGray():
     # run suite
     global _result_timings
-    custom_stream.write('\n----------------------------------------------------------------------\n')
-    custom_stream.write('\n                 *** Sub sampling of gray images  ***                 \n')
-    custom_stream.write('\n----------------------------------------------------------------------\n\n')
+    custom_stream.write('\n-------------------------------------'
+                        '---------------------------------\n')
+    custom_stream.write('\n                 *** Sub sampling of '
+                        'gray images  ***                 \n')
+    custom_stream.write('\n-------------------------------------'
+                        '---------------------------------\n\n')
     suite = unittest.TestLoader().loadTestsFromTestCase(TestSubSamplingGray)
     unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
     od = collections.OrderedDict(sorted(_result_timings.items()))
@@ -1399,9 +1582,12 @@ def subsamplingGray():
 def subsamplingRGB():
     # run suite
     global _result_timings
-    custom_stream.write('\n----------------------------------------------------------------------\n')
-    custom_stream.write('\n                 *** Sub sampling of RGB images  ***                 \n')
-    custom_stream.write('\n----------------------------------------------------------------------\n\n')
+    custom_stream.write('\n-------------------------------------'
+                        '---------------------------------\n')
+    custom_stream.write('\n                 *** Sub sampling of '
+                        'RGB images  ***                 \n')
+    custom_stream.write('\n-------------------------------------'
+                        '---------------------------------\n\n')
     suite = unittest.TestLoader().loadTestsFromTestCase(TestSubSamplingRGB)
     unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
     od = collections.OrderedDict(sorted(_result_timings.items()))
@@ -1419,9 +1605,12 @@ def subsamplingRGB():
 def blendingGray():
     # run suite
     global _result_timings
-    custom_stream.write('\n----------------------------------------------------------------------\n')
-    custom_stream.write('\n                   *** Blending of gray images  ***                   \n')
-    custom_stream.write('\n----------------------------------------------------------------------\n\n')
+    custom_stream.write('\n-----------------------------------'
+                        '-----------------------------------\n')
+    custom_stream.write('\n                   *** Blending of '
+                        'gray images  ***                   \n')
+    custom_stream.write('\n-----------------------------------'
+                        '-----------------------------------\n\n')
     suite = unittest.TestLoader().loadTestsFromTestCase(TestBlendingGray)
     unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
     od = collections.OrderedDict(sorted(_result_timings.items()))
@@ -1439,9 +1628,12 @@ def blendingGray():
 def blendingRGB():
     # run suite
     global _result_timings
-    custom_stream.write('\n----------------------------------------------------------------------\n')
-    custom_stream.write('\n                   *** Blending of RGB images  ***                    \n')
-    custom_stream.write('\n----------------------------------------------------------------------\n\n')
+    custom_stream.write('\n-----------------------------------'
+                        '-----------------------------------\n')
+    custom_stream.write('\n                   *** Blending of '
+                        'RGB images  ***                    \n')
+    custom_stream.write('\n-----------------------------------'
+                        '-----------------------------------\n\n')
     suite = unittest.TestLoader().loadTestsFromTestCase(TestBlendingRGB)
     unittest.TextTestRunner(verbosity=3, stream=custom_stream).run(suite)
     od = collections.OrderedDict(sorted(_result_timings.items()))
@@ -1465,7 +1657,3 @@ if __name__ == '__main__':
     rotateLinRGB()
     subsamplingGray()
     subsamplingRGB()
-
-
-
-
