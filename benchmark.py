@@ -1296,7 +1296,7 @@ class TestBlendingRGB(unittest.TestCase):
         pass
 
 
-def rotateGrayNN():
+def rotateNNGray():
     # run suite
     global _result_timings
     custom_stream.write('\n----------------------------------------------------------------------\n')
@@ -1316,7 +1316,7 @@ def rotateGrayNN():
     _result_timings = {}
 
 
-def rotateRGBNN():
+def rotateNNRGB():
     # run suite
     global _result_timings
     custom_stream.write('\n----------------------------------------------------------------------\n')
@@ -1336,7 +1336,7 @@ def rotateRGBNN():
     _result_timings = {}
 
 
-def rotateGrayLin():
+def rotateLinGray():
     # run suite
     global _result_timings
     custom_stream.write('\n----------------------------------------------------------------------\n')
@@ -1356,7 +1356,7 @@ def rotateGrayLin():
     _result_timings = {}
 
 
-def rotateRGBLin():
+def rotateLinRGB():
     # run suite
     global _result_timings
     custom_stream.write('\n----------------------------------------------------------------------\n')
@@ -1459,10 +1459,10 @@ def blendingRGB():
 if __name__ == '__main__':
     blendingGray()
     blendingRGB()
-    rotateGrayNN()
-    rotateRGBNN()
-    rotateGrayLin()
-    rotateRGBLin()
+    rotateNNGray()
+    rotateNNRGB()
+    rotateLinGray()
+    rotateLinRGB()
     subsamplingGray()
     subsamplingRGB()
 
