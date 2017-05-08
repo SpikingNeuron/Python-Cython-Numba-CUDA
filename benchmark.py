@@ -39,7 +39,7 @@ custom_stream = sys.stdout
 
 # config vars
 _PLOT = True
-_ITER_NUM = 100
+_ITER_NUM = 1
 _result_timings = {}
 
 
@@ -81,6 +81,11 @@ def plot_images(im0, im1, im2, im3, title):
 
     plt.savefig('Report\\' + title + '.png')
     # plt.show()
+
+    plt.clf()
+    plt.close()
+    fig.clf()
+    fig.clear()
 
 
 def get_image_lena(query):
