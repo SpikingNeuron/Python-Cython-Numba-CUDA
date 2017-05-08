@@ -15,11 +15,6 @@ import pyximport
 
 from Cython.Build import cythonize
 
-from Algo_Blending import AlgoBlending
-from Algo_RotateNN import AlgoRotateNN
-from Algo_RotateLinear import AlgoRotateLin
-from Algo_SubSampling import AlgoSubSampling
-
 matplotlib.style.use('ggplot')
 
 # for compiling the cython code
@@ -33,6 +28,11 @@ cythonize('Algo_Blending.pyx', annotate=True)
 cythonize('Algo_RotateNN.pyx', annotate=True)
 cythonize('Algo_RotateLinear.pyx', annotate=True)
 cythonize('Algo_SubSampling.pyx', annotate=True)
+
+from Algo_Blending import AlgoBlending
+from Algo_RotateNN import AlgoRotateNN
+from Algo_RotateLinear import AlgoRotateLin
+from Algo_SubSampling import AlgoSubSampling
 
 # To print on console or to file
 custom_stream = sys.stdout
