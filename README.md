@@ -4,6 +4,8 @@
 
 ## About Project
 
+### Algorithms implemented
+
 This project has implementation for below algorithms:
 + Blending of two images
 + Rotation without interpolation
@@ -17,6 +19,8 @@ Every algorithm is tested with unittest for three different categories:
 
 So basically there are eight test cases per algorithm.
 
+### Three different implementations with numpy, cython and pycuda
+
 We have three implementation of these algorithms for benchmarking:
 + Python Numpy library
 + Cython
@@ -24,6 +28,12 @@ We have three implementation of these algorithms for benchmarking:
 The `setup.py` file will be updated soon...)
 
 :construction: :warning: CUDA part still needs nvcc compiler patch (Only Numpy and Cython will work) :warning: :construction:
+
+### Additional contents
+
+Once you run `benchmark.py` the cython code will be compiled and for every `*
+.pyx` a `*.html` file will be generated. This `*.html` file will have the info 
+about  how  well the pycthon code is converted to C.
 
 ## Environment
 + Windows 10 
