@@ -2,6 +2,8 @@
 
 # Python Cython CUDA
 
+[![gitcheese.com](https://s3.amazonaws.com/gitcheese-ui-master/images/badge.svg)](https://www.gitcheese.com/donate/users/2289914/repos/53971816)
+
 ## About Project
 
 ### Algorithms implemented
