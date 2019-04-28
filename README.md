@@ -31,6 +31,8 @@ We have three implementation of these algorithms for benchmarking:
 The `setup.py` file will be updated soon...)
 
 :construction: :warning: CUDA part still needs nvcc compiler patch (Only Numpy and Cython will work) :warning: :construction:
+possible reference for beert way of gpu integration
+https://xnd.readthedocs.io/en/latest/xndtools/tutorials/gpu_kernel.html
 
 ### Additional contents
 
